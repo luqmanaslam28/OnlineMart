@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CUSTOM CSS LINK -->
+  <link rel="stylesheet" href="login.css">
+  <title>OMART - REGISTER</title>
+  <link rel="shortcut icon" href="https://camo.githubusercontent.com/1693a2ba76519ac1b8d627f2f2cd7f1740647447143023d77e2f8393cd11bcbb/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323431303732362f313934393935332f36613533636235382d383132622d313165332d396230662d3438326335326531623838332e706e67" type="image/x-icon">
+</head>
+
+<body>
+  <!-- LOADER DIV -->
+  <div class="loader"></div>
+
+  <!-- CONTENT DIV -->
+  <div class="wrapper">
+    <div class="title-text">
+      <div class="title login">LOGIN FORM</div>
+      <div class="title signup">SIGNUP FORM</div>
+    </div>
+    <div class="form-container">
+      <div class="slide-controls">
+        <input type="radio" name="slide" id="login" checked>
+        <input type="radio" name="slide" id="signup">
+        <label for="login" class="slide login">Login</label>
+        <label for="signup" class="slide signup">Signup</label>
+        <div class="slider-tab"></div>
+      </div>
+      <div class="form-inner">
+        <form action="#" class="login">
+          <div class="field">
+            <input type="text" id="Login_email" placeholder="Email Address" required>
+          </div>
+          <div class="field">
+            <input type="password" id="Login_password" placeholder="Password" required>
+          </div>
+          <div class="pass-link"><a href="#">Forgot password?</a></div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" onclick="Login()" value="Login">
+          </div>
+          <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+        </form>
+        <form action="#" class="signup">
+          <div class="field">
+            <input type="text" id="Signup_username" placeholder="Username" required>
+          </div>
+          <div class="field">
+            <input type="email" id="Signup_email" placeholder="Email Address" required>
+          </div>
+          <div class="field">
+            <input type="password" id="Signup_password" placeholder="password" required>
+          </div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" onclick="register()" value="Signup">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+<!-- SWEET ALERT JS LINK -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- LOADER JS -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      document.querySelector('.loader').style.display = 'none';
+      document.querySelector('.wrapper').style.display = 'block';
+    }, 5000)
+  })
+</script>
+<!-- LOADER JS -->
+
+<!-- LOGIN JS -->
+<script>
+  const loginText = document.querySelector(".title-text .login");
+  const loginForm = document.querySelector("form.login");
+  const loginBtn = document.querySelector("label.login");
+  const signupBtn = document.querySelector("label.signup");
+  const signupLink = document.querySelector("form .signup-link a");
+  signupBtn.onclick = (() => {
+    loginForm.style.marginLeft = "-50%";
+    loginText.style.marginLeft = "-50%";
+  });
+  loginBtn.onclick = (() => {
+    loginForm.style.marginLeft = "0%";
+    loginText.style.marginLeft = "0%";
+  });
+  signupLink.onclick = (() => {
+    signupBtn.click();
+    return false;
+  });
+</script>
+<!-- LOGIN JS -->
+
+<!-- REGX JS -->
+<script>
+  function register() {
+    var Username = document.getElementById("Signup_username").value;
+    var Email = document.getElementById("Signup_email").value;
+    var Password = document.getElementById("Signup_password").value;
+
+    var usernameRegex = /^[a-zA-Z0-9]{5,10}$/;
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+
+    if (!usernameRegex.test(Username)) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "UserName must contain a Capital, Lower & Number!!"
+      });
+
+      return;
+    }
+    if (!emailRegex.test(Email)) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter the correct Email format!!"
+      });
+      return;
+    }
+    if (!passwordRegex.test(Password)) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Password must contain a Lower, Capital, Number & Special Character!!"
+      });
+      return;
+    }
+    Swal.fire({
+      title: "SIGNUP SUCESSFUL",
+      text: "🎉 Congratulations! You've successfully signed up. Now Login😊",
+      icon: "success"
+    });
+    localStorage.setItem("name", Username);
+    localStorage.setItem("email", Email);
+    localStorage.setItem("password", Password);
+  }
+
+  function Login() {
+    var email = document.getElementById("Login_email").value;
+    var password = document.getElementById("Login_password").value;
+
+    var localEmail = localStorage.getItem("email")
+    var localPassword = localStorage.getItem("password")
+
+    if (email == localEmail && password == localPassword) {
+      Swal.fire({
+        title: "LOGIN SUCESSFUL",
+        text: "🎉 Congratulations! You've successfully Logged In. Enjoy😊",
+        icon: "success"
+      });
+
+      location.href = "../index.html"
+
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter the correct Email & Password!!"
+      });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // function SignUp() {
+  //   let username = document.querySelector("#Signup_username");
+  //   let email = document.querySelector("#Signup_email");
+  //   let password = document.querySelector("#Signup_password");
+
+
+  //   console.log(regex.username)
+  //   console.log(username.value)
+  //   console.log(regex.username.test(username.value))
+
+  //   console.log(regex.email)
+  //   console.log(email.value)
+  //   console.log(regex.email.test(email.value))
+
+  //   console.log(regex.password)
+  //   console.log(password.value)
+  //   console.log(regex.password.test(password.value))
+
+  //   console.log(regex.phone)
+  //   console.log(phone.value)
+  //   console.log(regex.phone.test(phone.value))
+
+
+  //   if (username.value !== "" && email.value !== "" && password.value !== "") {
+  //     if (!regex.username.test(username.value) && !regex.email.test(email.value) && !regex.password.test(password.value)) {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Oops...",
+  //         text: "Please enter valid values!"
+  //       })
+  //     }
+  //     else {
+  //       let person = {
+  //         username: username.value,
+  //         email: email.value,
+  //         password: password.value,
+  //       }
+  //       user.push(person)
+  //       localStorage.setItem("user", JSON.stringify(user))
+
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Thanks",
+  //         text: "Registeration Successful",
+  //         footer: '<a href="">Login now!</a>'
+  //       });
+  //     }
+  //   }
+  //   else {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Oops...",
+  //       text: "Please fill all the values!"
+  //     });
+  //   }
+  // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</html>
